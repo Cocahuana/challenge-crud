@@ -3,7 +3,7 @@ const users = require( './users' )
 const router = Router();
 
 /* GET home page. */
-router.use( '/getUsers', users );
+router.use( '/users', users );
 
 
 module.exports = router;

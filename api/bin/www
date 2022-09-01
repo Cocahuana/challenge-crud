@@ -7,12 +7,13 @@
 var app = require( '../app' );
 var debug = require( 'debug' )( 'api:server' );
 var http = require( 'http' );
+const { conn } = require( '../db.js' );
 
 /**
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort( process.env.PORT || '3001' );
+var port = normalizePort( process.env.PORT || '3000' );
 app.set( 'port', port );
 
 /**
@@ -21,13 +22,19 @@ app.set( 'port', port );
 
 var server = http.createServer( app );
 
+conn.sync( { force: true } ).then( () => {
+  app.listen( process.env.PORT || 3001, async () => {
+    console.log( '%s listening at 3001' ); // eslint-disable-line no-console
+  } );
+} );
+
 /**
  * Listen on provided port, on all network interfaces.
  */
 
-server.listen( port );
-server.on( 'error', onError );
-server.on( 'listening', onListening );
+// server.listen( port );
+app.on( 'error', onError );
+app.on( 'listening', onListening );
 
 /**
  * Normalize a port into a number, string, or false.

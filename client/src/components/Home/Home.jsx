@@ -14,6 +14,7 @@ import {
 	Td,
 	TableCaption,
 	TableContainer,
+	Button,
 } from '@chakra-ui/react';
 import { getUsersFromApi } from '../../actions';
 
@@ -41,10 +42,10 @@ function Home() {
 			<GridItem bg='orange.300' area={'header'}>
 				Header
 			</GridItem>
-			<GridItem bg='green.300' area={'main'}>
+			<GridItem bg='whiteAlpha.400' area={'main'}>
 				{usersInfo ? (
 					<TableContainer>
-						<Table variant='simple'>
+						<Table variant='striped' colorScheme='orange'>
 							<TableCaption>CRUD challenge</TableCaption>
 							<Thead>
 								<Th>usuarioId</Th>
@@ -62,7 +63,15 @@ function Home() {
 										<Td>{e.clave}</Td>
 										<Td>{e.nombre}</Td>
 										<Td>{e.email}</Td>
-										<Td>Future buttons :v</Td>
+										<Td>
+											<Button bg='cyan.300' mr='1'>
+												Update
+											</Button>
+											{
+											// En proyectos reales el borrado debería ser lógico, como es un challenge, el borrado será fisico
+											}
+											<Button bg='red.400'>Delete</Button>
+										</Td>
 									</Tr>
 								))}
 							</Tbody>
