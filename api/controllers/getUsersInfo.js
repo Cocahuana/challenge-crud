@@ -16,7 +16,9 @@ const loadInfoFromApiToDb = async () => {
         User.findOrCreate(
             {
                 where: {
-                    usuarioId: e.usuarioId,
+                    // Si tuvieramos que permanecer los ids provenientes de la api,
+                    // El codigo sería diferente y tendria que agregarse la linea de abajo
+                    // usuarioId: e.usuarioId,
                     user: e.user,
                     clave: e.clave,
                     nombre: e.nombre,
@@ -34,8 +36,4 @@ const getUsersFromDb = async () => {
     return users;
 }
 
-const getUsersById = async ( id ) => {
-    const apiInfo = await axios.get( endpoint );
-    return apiInfo.data;
-}
 module.exports = { getUsersFromApi, loadInfoFromApiToDb, getUsersFromDb }

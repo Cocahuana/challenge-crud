@@ -9,11 +9,12 @@ module.exports = ( sequelize ) => {
             usuarioId: {
                 type: DataTypes.INTEGER,
                 primaryKey: true,
+                autoIncrement: true,
+                allowNull: false,
             },
             user: {
                 type: DataTypes.STRING,
                 allowNull: false,
-                unique: true,
             },
             clave: {
                 type: DataTypes.STRING,
@@ -23,12 +24,12 @@ module.exports = ( sequelize ) => {
             nombre: {
                 type: DataTypes.STRING,
                 allowNull: false,
-                unique: true,
+                // unique: true,
             },
             email: {
                 type: DataTypes.STRING,
                 allowNull: false,
-                unique: true,
+                // unique: true,
             },
         },
         { timestamps: false }

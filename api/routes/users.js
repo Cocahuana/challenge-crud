@@ -14,12 +14,9 @@ router.get( '/', async ( req, res, next ) => {
   {
     const result = await getUsersFromDb();
     res.status( 200 ).send( result );
+  }
+  catch ( err ) { res.status( 400 ).json( err.message ); }
 
-  }
-  catch ( err )
-  {
-    res.status( 400 ).json( err.message );
-  }
 } );
 
 router.get( '/loadUsers', async ( req, res, next ) => {
@@ -42,8 +39,6 @@ router.delete( '/:id', async ( req, res, next ) => {
   try
   {
     let integerId = parseInt( id );
-
-
     const row = await User.findOne( {
       where: { usuarioId: integerId },
     } );
@@ -55,6 +50,25 @@ router.delete( '/:id', async ( req, res, next ) => {
 
     res.status( 200 ).send( "Usuario borrado exitosamente" )
 
+  }
+  catch ( err )
+  {
+    res.status( 400 ).json( err.message );
+  }
+} );
+
+router.post( '/createUser', async ( req, res, next ) => {
+  try
+  {
+    let { user, clave, nombre, email } = req.body;
+
+    let newUser = await User.create( {
+      user,
+      clave,
+      nombre,
+      email,
+    } );
+    res.status( 200 ).send( newUser );
   }
   catch ( err )
   {
