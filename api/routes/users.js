@@ -1,79 +1,113 @@
 const express = require( 'express' );
 const router = express();
 const {
-  getUsersFromApi,
-  loadInfoFromApiToDb,
-  getUsersFromDb
+	getUsersFromApi,
+	loadInfoFromApiToDb,
+	getUsersFromDb
 } = require( '../controllers/getUsersInfo' );
 
 const { User } = require( "../db" );
 
 
 router.get( '/', async ( req, res, next ) => {
-  try
-  {
-    const result = await getUsersFromDb();
-    res.status( 200 ).send( result );
-  }
-  catch ( err ) { res.status( 400 ).json( err.message ); }
+	try
+	{
+		const result = await getUsersFromDb();
+		res.status( 200 ).send( result );
+	}
+	catch ( err ) { res.status( 400 ).json( err.message ); }
 
 } );
 
 router.get( '/loadUsers', async ( req, res, next ) => {
-  try
-  {
+	try
+	{
 
-    await loadInfoFromApiToDb();
-    const allUsers = await User.findAll();
-    res.status( 200 ).send( allUsers );
+		await loadInfoFromApiToDb();
+		const allUsers = await User.findAll();
+		res.status( 200 ).send( allUsers );
 
-  }
-  catch ( err )
-  {
-    res.status( 400 ).json( err.message );
-  }
+	}
+	catch ( err )
+	{
+		res.status( 400 ).json( err.message );
+	}
 } );
 
 router.delete( '/:id', async ( req, res, next ) => {
-  const { id } = req.params;
-  try
-  {
-    let integerId = parseInt( id );
-    const row = await User.findOne( {
-      where: { usuarioId: integerId },
-    } );
+	const { id } = req.params;
+	try
+	{
+		let integerId = parseInt( id );
+		const row = await User.findOne( {
+			where: { usuarioId: integerId },
+		} );
 
-    if ( row )
-    {
-      await row.destroy(); // Borra la fila entera
-    }
+		if ( row )
+		{
+			await row.destroy(); // Borra la fila entera
+		}
 
-    res.status( 200 ).send( "Usuario borrado exitosamente" )
+		res.status( 200 ).send( "Usuario borrado exitosamente" )
 
-  }
-  catch ( err )
-  {
-    res.status( 400 ).json( err.message );
-  }
+	}
+	catch ( err )
+	{
+		res.status( 400 ).json( err.message );
+	}
 } );
 
 router.post( '/createUser', async ( req, res, next ) => {
-  try
-  {
-    let { user, clave, nombre, email } = req.body;
+	try
+	{
+		let { user, clave, nombre, email } = req.body;
 
-    let newUser = await User.create( {
-      user,
-      clave,
-      nombre,
-      email,
-    } );
-    res.status( 200 ).send( newUser );
-  }
-  catch ( err )
-  {
-    res.status( 400 ).json( err.message );
-  }
+		let newUser = await User.create( {
+			user,
+			clave,
+			nombre,
+			email,
+		} );
+		res.status( 200 ).send( newUser );
+	}
+	catch ( err )
+	{
+		res.status( 400 ).json( err.message );
+	}
+} );
+
+router.put( '/:id', async ( req, res, next ) => {
+	const { id } = req.params;
+	try
+	{
+		let integerId = parseInt( id );
+		let { user, clave, nombre, email } = req.body;
+
+		let findedUser = await User.findOne( {
+			where: {
+				usuarioId: integerId,
+			},
+		} );
+		if ( findedUser )
+		{
+			const updatedUser =
+				await findedUser.update( {
+					user: user,
+					clave: clave,
+					nombre: nombre,
+					email: email,
+				} );
+			res.status( 200 ).send( updatedUser );
+		}
+		else
+		{
+			res.status( 400 ).send( 'No user was found with that id' );
+		}
+	}
+	catch ( err )
+	{
+		res.status( 400 ).json( err.message );
+	}
 } );
 
 module.exports = router;
