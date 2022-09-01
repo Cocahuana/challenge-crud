@@ -1,16 +1,39 @@
 import React from 'react';
-import { Grid, GridItem, Box } from '@chakra-ui/react';
+
+import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+	Grid,
+	GridItem,
+	Table,
+	Thead,
+	Tbody,
+	Tfoot,
+	Tr,
+	Th,
+	Td,
+	TableCaption,
+	TableContainer,
+} from '@chakra-ui/react';
+import { getUsersFromApi } from '../../actions';
 
 function Home() {
+	const usersInfo = useSelector((state) => state.usersInfo);
+	const dispatch = useDispatch();
+	useEffect(() => {
+		//Es lo mismo que hacer un mapStateToProps
+		dispatch(getUsersFromApi());
+	}, [dispatch]);
+
 	return (
 		<Grid
 			templateAreas={`
-                "header header"
-                "nav main"
-                "nav footer"
+                "header"
+                "main"
+                "footer"
             `}
-			gridTemplateRows={'50px 1fr 30px'}
-			gridTemplateColumns={'150px 1fr'}
+			gridTemplateRows={'10vh 1fr 5vh'}
+			gridTemplateColumns={'100%'}
 			h='100vh'
 			gap='1'
 			color='blackAlpha.700'
@@ -18,11 +41,36 @@ function Home() {
 			<GridItem bg='orange.300' area={'header'}>
 				Header
 			</GridItem>
-			<GridItem bg='pink.300' area={'nav'}>
-				Nav
-			</GridItem>
 			<GridItem bg='green.300' area={'main'}>
-				Main
+				{usersInfo ? (
+					<TableContainer>
+						<Table variant='simple'>
+							<TableCaption>CRUD challenge</TableCaption>
+							<Thead>
+								<Th>usuarioId</Th>
+								<Th>user</Th>
+								<Th>clave</Th>
+								<Th>nombre</Th>
+								<Th>email</Th>
+								<Th>Actions</Th>
+							</Thead>
+							<Tbody>
+								{usersInfo.map((e) => (
+									<Tr>
+										<Td>{e.usuarioId}</Td>
+										<Td>{e.user}</Td>
+										<Td>{e.clave}</Td>
+										<Td>{e.nombre}</Td>
+										<Td>{e.email}</Td>
+										<Td>Future buttons :v</Td>
+									</Tr>
+								))}
+							</Tbody>
+						</Table>
+					</TableContainer>
+				) : (
+					<h3>Loading...</h3>
+				)}
 			</GridItem>
 			<GridItem bg='blue.300' area={'footer'}>
 				Footer
