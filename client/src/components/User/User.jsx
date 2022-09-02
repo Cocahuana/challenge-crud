@@ -134,7 +134,9 @@ export default function User({
 					motionPreset='slideInBottom'>
 					<ModalOverlay />
 					<ModalContent>
-						<ModalHeader color='red.400'>ATENCION</ModalHeader>
+						<ModalHeader color='blackAlpha.900'>
+							Editar Usuario
+						</ModalHeader>
 						<ModalCloseButton />
 						<ModalBody>
 							<FormControl>
@@ -186,13 +188,15 @@ export default function User({
 						</ModalBody>
 						<ModalFooter>
 							<Button
-								colorScheme='blue'
+								bg='whiteAlpha.200'
+								color='blue.500'
 								mr={3}
 								onClick={onEditClose}>
 								No. Cerrar
 							</Button>
 							<Button
-								bg='red.400'
+								bg='blue.500'
+								color='whiteAlpha.900'
 								type='submit'
 								onClick={() => handleOnUpdate() && onEditClose}
 								variant='ghost'>
