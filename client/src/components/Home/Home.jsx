@@ -29,13 +29,13 @@ import User from "../User/User";
 function Home() {
 	const usersInfo = useSelector((state) => state.usersInfo);
 	const dispatch = useDispatch();
-	const [input, setInput] = useState({
-		usuarioId: "",
-		user: "",
-		clave: "",
-		nombre: "",
-		email: "",
-	});
+	// const [input, setInput] = useState({
+	// 	usuarioId: "",
+	// 	user: "",
+	// 	clave: "",
+	// 	nombre: "",
+	// 	email: "",
+	// });
 
 	useEffect(() => {
 		//Es lo mismo que hacer un mapStateToProps
@@ -45,23 +45,23 @@ function Home() {
 	function handleOnDelete(id) {
 		dispatch(deleteUserById(id)).then(dispatch(getUsersFromApi()));
 	}
-	function handleOnUpdate() {
-		console.log("holaaa");
-		input.email = "xdxdxd@gmail.com";
-		input.usuarioId = "16";
-		input.user = "Ezequiel";
-		input.clave = "safasfas";
-		input.nombre = "eze";
-		console.log(input);
-		dispatch(updateUserById(input));
-	}
-	function handleOnChange(event) {
-		setInput({
-			...input,
-			[event.target.name]: [event.target.value],
-		});
-		console.log(input);
-	}
+	// function handleOnUpdate() {
+	// 	console.log("holaaa");
+	// 	// input.email = "xdxdxd@gmail.com";
+	// 	// input.usuarioId = "16";
+	// 	// input.user = "Ezequiel";
+	// 	// input.clave = "safasfas";
+	// 	// input.nombre = "eze";
+	// 	console.log(input);
+	// 	dispatch(updateUserById(input));
+	// }
+	// function handleOnChange(event) {
+	// 	setInput({
+	// 		...input,
+	// 		[event.target.name]: [event.target.value],
+	// 	});
+	// 	console.log(input);
+	// }
 
 	return (
 		<Grid
@@ -101,9 +101,7 @@ function Home() {
 										clave={e.clave}
 										nombre={e.nombre}
 										email={e.email}
-										handleOnDelete={handleOnDelete}
-										handleOnUpdate={handleOnUpdate}
-										handleOnChange={handleOnChange}></User>
+										handleOnDelete={handleOnDelete}></User>
 								))}
 								<Td>
 									<Button bg='cyan.300' mr='1'>

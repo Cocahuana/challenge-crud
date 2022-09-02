@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import {
@@ -38,11 +38,26 @@ export default function User({
 	nombre,
 	email,
 	handleOnDelete,
-	handleOnUpdate,
-	handleOnChange,
 }) {
 	const dispatch = useDispatch();
 
+	const [input, setInput] = useState({
+		usuarioId: usuarioId,
+		user: "",
+		clave: "",
+		nombre: "",
+		email: "",
+	});
+
+	function handleOnChange(event) {
+		setInput({
+			...input,
+			[event.target.name]: event.target.value,
+		});
+	}
+	function handleOnUpdate() {
+		dispatch(updateUserById(input));
+	}
 	const {
 		isOpen: isDeleteOpen,
 		onOpen: onDeleteOpen,
@@ -119,11 +134,48 @@ export default function User({
 						<ModalCloseButton />
 						<ModalBody>
 							<FormControl>
+								<FormLabel>Usuario Id</FormLabel>
+								<Input
+									type='text'
+									name='usuarioId'
+									value={usuarioId}
+									disabled
+								/>
+							</FormControl>
+							<FormControl>
+								<FormLabel>User</FormLabel>
+								<Input
+									type='text'
+									name='user'
+									defaultValue={user}
+									onChange={handleOnChange}
+								/>
+							</FormControl>
+
+							<FormControl>
+								<FormLabel>Clave</FormLabel>
+								<Input
+									type='text'
+									name='clave'
+									defaultValue={clave}
+									onChange={handleOnChange}
+								/>
+							</FormControl>
+							<FormControl>
+								<FormLabel>Nombre</FormLabel>
+								<Input
+									type='text'
+									name='nombre'
+									defaultValue={nombre}
+									onChange={handleOnChange}
+								/>
+							</FormControl>
+							<FormControl>
 								<FormLabel>Email address</FormLabel>
 								<Input
 									type='text'
 									name='email'
-									value={Input.email}
+									defaultValue={email}
 									onChange={handleOnChange}
 								/>
 							</FormControl>
