@@ -89,7 +89,9 @@ export default function User({
 					// En proyectos reales el borrado debería ser lógico, como es un challenge, el borrado será fisico
 				}
 
-				<Button onClick={onDeleteOpen}>Eliminar</Button>
+				<Button bg={"red.300"} onClick={onDeleteOpen}>
+					Eliminar
+				</Button>
 				<Modal
 					isOpen={isDeleteOpen}
 					onClose={onDeleteClose}
@@ -102,8 +104,8 @@ export default function User({
 						<ModalBody>
 							<Text fontWeight='bold' mb='1rem'>
 								Usted está a punto de eliminar al usuario
-								{" " + `${user}`}, Está seguro? esta acción es
-								irreversible
+								<Text color='red.400'>{`${user}`}</Text>
+								Está seguro? esta acción es irreversible
 							</Text>
 						</ModalBody>
 						<ModalFooter>
@@ -115,6 +117,7 @@ export default function User({
 							</Button>
 							<Button
 								bg='red.400'
+								type='submit'
 								onClick={() =>
 									handleOnDelete(usuarioId) && onDeleteClose
 								}
