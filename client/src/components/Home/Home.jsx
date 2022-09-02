@@ -15,6 +15,13 @@ import {
 	TableCaption,
 	TableContainer,
 	Button,
+	Modal,
+	ModalOverlay,
+	ModalContent,
+	ModalHeader,
+	ModalFooter,
+	ModalBody,
+	ModalCloseButton,
 } from '@chakra-ui/react';
 import { deleteUserById, getUsersFromApi } from '../../actions';
 import User from '../User/User';
@@ -66,6 +73,11 @@ function Home() {
 										nombre={e.nombre}
 										email={e.email}></User>
 								))}
+								<Td>
+									<Button bg='cyan.300' mr='1'>
+										Create
+									</Button>
+								</Td>
 							</Tbody>
 						</Table>
 					</TableContainer>

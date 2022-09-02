@@ -14,10 +14,21 @@ import {
 	TableCaption,
 	TableContainer,
 	Button,
+	Modal,
+	ModalOverlay,
+	ModalContent,
+	ModalHeader,
+	ModalFooter,
+	ModalBody,
+	ModalCloseButton,
+	useDisclosure,
+	Text,
 } from '@chakra-ui/react';
 import { deleteUserById, getUsersFromApi } from '../../actions';
 export default function User({ usuarioId, user, clave, nombre, email }) {
 	const dispatch = useDispatch();
+	const { isOpen, onOpen, onClose } = useDisclosure();
+
 	function handleOnDelete(id) {
 		dispatch(deleteUserById(id));
 		dispatch(getUsersFromApi());
@@ -37,9 +48,38 @@ export default function User({ usuarioId, user, clave, nombre, email }) {
 				{
 					// En proyectos reales el borrado debería ser lógico, como es un challenge, el borrado será fisico
 				}
-				<Button bg='red.400' onClick={() => handleOnDelete(usuarioId)}>
-					Delete
-				</Button>
+				<Button onClick={onOpen}>Eliminar</Button>
+				<Modal
+					isCentered
+					onClose={onClose}
+					isOpen={isOpen}
+					motionPreset='slideInBottom'>
+					<ModalOverlay />
+					<ModalContent>
+						<ModalHeader color='red.400'>ATENCION</ModalHeader>
+						<ModalCloseButton />
+						<ModalBody>
+							<Text fontWeight='bold' mb='1rem'>
+								Usted está a punto de eliminar al usuario
+								{' ' + `${user}`}, Está seguro? esta acción es
+								irreversible
+							</Text>
+						</ModalBody>
+						<ModalFooter>
+							<Button colorScheme='blue' mr={3} onClick={onClose}>
+								No. Cerrar
+							</Button>
+							<Button
+								bg='red.400'
+								onClick={() =>
+									handleOnDelete(usuarioId) && onClose
+								}
+								variant='ghost'>
+								Sí. Eliminar
+							</Button>
+						</ModalFooter>
+					</ModalContent>
+				</Modal>
 			</Td>
 		</Tr>
 	);
