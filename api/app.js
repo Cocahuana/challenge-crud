@@ -8,8 +8,11 @@ const routes = require( './routes/index.js' );
 // var usersRouter = require( './routes/users' );
 
 const app = express();
+const cors = require( 'cors' );
 app.name = 'API';
 
+
+app.use( cors() );
 // view engine setup
 app.set( 'views', path.join( __dirname, 'views' ) );
 app.set( 'view engine', 'jade' );

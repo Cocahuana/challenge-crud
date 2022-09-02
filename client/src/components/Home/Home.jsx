@@ -16,7 +16,8 @@ import {
 	TableContainer,
 	Button,
 } from '@chakra-ui/react';
-import { getUsersFromApi } from '../../actions';
+import { deleteUserById, getUsersFromApi } from '../../actions';
+import User from '../User/User';
 
 function Home() {
 	const usersInfo = useSelector((state) => state.usersInfo);
@@ -57,22 +58,13 @@ function Home() {
 							</Thead>
 							<Tbody>
 								{usersInfo.map((e) => (
-									<Tr>
-										<Td>{e.usuarioId}</Td>
-										<Td>{e.user}</Td>
-										<Td>{e.clave}</Td>
-										<Td>{e.nombre}</Td>
-										<Td>{e.email}</Td>
-										<Td>
-											<Button bg='cyan.300' mr='1'>
-												Update
-											</Button>
-											{
-											// En proyectos reales el borrado debería ser lógico, como es un challenge, el borrado será fisico
-											}
-											<Button bg='red.400'>Delete</Button>
-										</Td>
-									</Tr>
+									<User
+										key={e.usuarioId}
+										usuarioId={e.usuarioId}
+										user={e.user}
+										clave={e.clave}
+										nombre={e.nombre}
+										email={e.email}></User>
 								))}
 							</Tbody>
 						</Table>

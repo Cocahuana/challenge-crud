@@ -1,1 +1,2 @@
 export const GET_USERS_FROM_API = "GET_USERS_FROM_API";
+export const DELETE_USER_BY_ID = "DELETE_USER_BY_ID";
