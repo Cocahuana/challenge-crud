@@ -1,4 +1,4 @@
-import { GET_USERS_FROM_API, DELETE_USER_BY_ID, UPDATE_USER_BY_ID, GET_USER_BY_ID } from "./actions";
+import { GET_USERS_FROM_API, DELETE_USER_BY_ID, UPDATE_USER_BY_ID, GET_USER_BY_ID, CREATE_USER } from "./actions";
 import axios from 'axios';
 // const endpoint = "http://yamana.somee.com/api/usuarios";
 
@@ -6,7 +6,6 @@ export function getUsersFromApi () {
     return async function ( dispatch ) {
         try
         {
-            console.log( "get inside" );
             let usersInfo = await axios.get( 'http://localhost:3001/users' );
             return dispatch( {
                 type: GET_USERS_FROM_API,
@@ -42,7 +41,6 @@ export function updateUserById ( payload ) {
     return async function () {
         try
         {
-            console.log( "first" )
             await axios.put( `http://localhost:3001/users/${ payload.usuarioId }`, payload );
         }
         catch ( error )
@@ -66,4 +64,18 @@ export function getUserById ( id ) {
             console.log( error );
         }
     }
-} 
+}
+
+export function createUser ( payload ) {
+    return async function () {
+        try
+        {
+            let usersInfo = await axios.post( `http://localhost:3001/users/createUser`, payload );
+            console.log( usersInfo );
+        }
+        catch ( error )
+        {
+            console.log( error );
+        }
+    }
+}

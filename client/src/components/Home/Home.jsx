@@ -25,17 +25,11 @@ import {
 } from "@chakra-ui/react";
 import { deleteUserById, getUsersFromApi, updateUserById } from "../../actions";
 import User from "../User/User";
+import UserCreate from "../User/create/UserCreate";
 
 function Home() {
 	const usersInfo = useSelector((state) => state.usersInfo);
 	const dispatch = useDispatch();
-	// const [input, setInput] = useState({
-	// 	usuarioId: "",
-	// 	user: "",
-	// 	clave: "",
-	// 	nombre: "",
-	// 	email: "",
-	// });
 
 	useEffect(() => {
 		//Es lo mismo que hacer un mapStateToProps
@@ -45,23 +39,6 @@ function Home() {
 	function handleOnDelete(id) {
 		dispatch(deleteUserById(id)).then(dispatch(getUsersFromApi()));
 	}
-	// function handleOnUpdate() {
-	// 	console.log("holaaa");
-	// 	// input.email = "xdxdxd@gmail.com";
-	// 	// input.usuarioId = "16";
-	// 	// input.user = "Ezequiel";
-	// 	// input.clave = "safasfas";
-	// 	// input.nombre = "eze";
-	// 	console.log(input);
-	// 	dispatch(updateUserById(input));
-	// }
-	// function handleOnChange(event) {
-	// 	setInput({
-	// 		...input,
-	// 		[event.target.name]: [event.target.value],
-	// 	});
-	// 	console.log(input);
-	// }
 
 	return (
 		<Grid
@@ -104,9 +81,7 @@ function Home() {
 										handleOnDelete={handleOnDelete}></User>
 								))}
 								<Td>
-									<Button bg='cyan.300' mr='1'>
-										Create
-									</Button>
+									<UserCreate />
 								</Td>
 							</Tbody>
 						</Table>
