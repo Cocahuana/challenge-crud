@@ -59,6 +59,9 @@ export default function User({
 		dispatch(updateUserById(input))
 			.then(dispatch(getUsersFromApi()))
 			.then(onEditClose());
+		setTimeout(() => {
+			dispatch(getUsersFromApi());
+		}, 300);
 	}
 	const {
 		isOpen: isDeleteOpen,
