@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-
+import { Link } from 'react-router-dom';
 import {
 	Grid,
 	GridItem,
@@ -23,15 +23,30 @@ import {
 	ModalCloseButton,
 	useDisclosure,
 	Text,
+	useBoolean,
 } from '@chakra-ui/react';
-import { deleteUserById, getUsersFromApi } from '../../actions';
+import { deleteUserById, getUsersFromApi, updateUserById } from '../../actions';
+import UpdateUser from './UpdateUser';
+
 export default function User({ usuarioId, user, clave, nombre, email }) {
 	const dispatch = useDispatch();
-	const { isOpen, onOpen, onClose } = useDisclosure();
+
+	const {
+		isOpen: isDeleteOpen,
+		onOpen: onDeleteOpen,
+		onClose: onDeleteClose,
+	} = useDisclosure();
+	const {
+		isOpen: isEditOpen,
+		onOpen: onEditOpen,
+		onClose: onEditClose,
+	} = useDisclosure();
 
 	function handleOnDelete(id) {
-		dispatch(deleteUserById(id));
-		dispatch(getUsersFromApi());
+		dispatch(deleteUserById(id)).then(dispatch(getUsersFromApi()));
+	}
+	function handleOnUpdate(id) {
+		dispatch(updateUserById(id)).then(dispatch(getUsersFromApi()));
 	}
 
 	return (
@@ -42,17 +57,22 @@ export default function User({ usuarioId, user, clave, nombre, email }) {
 			<Td>{nombre}</Td>
 			<Td>{email}</Td>
 			<Td>
-				<Button bg='cyan.300' mr='1'>
+				<Link to={`/user/${usuarioId}`}>
+					<Button>Actualizar :v</Button>
+				</Link>
+
+				{/* <Button bg='cyan.300' mr='1' onClick={onEditOpen}>
 					Update
-				</Button>
+				</Button> */}
 				{
 					// En proyectos reales el borrado debería ser lógico, como es un challenge, el borrado será fisico
 				}
-				<Button onClick={onOpen}>Eliminar</Button>
+
+				<Button onClick={onDeleteOpen}>Eliminar</Button>
 				<Modal
+					isOpen={isDeleteOpen}
+					onClose={onDeleteClose}
 					isCentered
-					onClose={onClose}
-					isOpen={isOpen}
 					motionPreset='slideInBottom'>
 					<ModalOverlay />
 					<ModalContent>
@@ -66,13 +86,16 @@ export default function User({ usuarioId, user, clave, nombre, email }) {
 							</Text>
 						</ModalBody>
 						<ModalFooter>
-							<Button colorScheme='blue' mr={3} onClick={onClose}>
+							<Button
+								colorScheme='blue'
+								mr={3}
+								onClick={onDeleteClose}>
 								No. Cerrar
 							</Button>
 							<Button
 								bg='red.400'
 								onClick={() =>
-									handleOnDelete(usuarioId) && onClose
+									handleOnDelete(usuarioId) && onDeleteClose
 								}
 								variant='ghost'>
 								Sí. Eliminar
@@ -80,7 +103,73 @@ export default function User({ usuarioId, user, clave, nombre, email }) {
 						</ModalFooter>
 					</ModalContent>
 				</Modal>
+
+				<Modal
+					isOpen={isEditOpen}
+					onClose={onEditClose}
+					isCentered
+					motionPreset='slideInBottom'>
+					<ModalOverlay />
+					<ModalContent>
+						<ModalHeader color='red.400'>ATENCION</ModalHeader>
+						<ModalCloseButton />
+						<ModalBody>
+							<Text fontWeight='bold' mb='1rem'>
+								Usted está a punto de Editar al usuario
+								{' ' + `${user}`}, Está seguro? esta acción es
+								irreversible
+							</Text>
+						</ModalBody>
+						<ModalFooter>
+							<Button
+								colorScheme='blue'
+								mr={3}
+								onClick={onEditClose}>
+								No. Cerrar
+							</Button>
+							<Button
+								bg='red.400'
+								onClick={() =>
+									handleOnUpdate(usuarioId) && onEditClose
+								}
+								variant='ghost'>
+								Sí. Editar
+							</Button>
+						</ModalFooter>
+					</ModalContent>
+				</Modal>
 			</Td>
 		</Tr>
 	);
+}
+
+{
+	/* <Modal
+	isOpen={isEditOpen}
+	onClose={onEditClose}
+	isCentered
+	motionPreset='slideInBottom'>
+	<ModalOverlay />
+	<ModalContent>
+		<ModalHeader color='red.400'>ATENCION</ModalHeader>
+		<ModalCloseButton />
+		<ModalBody>
+			<Text fontWeight='bold' mb='1rem'>
+				Usted está a punto de Editar al usuario
+				{' ' + `${user}`}, Está seguro? esta acción es irreversible
+			</Text>
+		</ModalBody>
+		<ModalFooter>
+			<Button colorScheme='blue' mr={3} onClick={onEditClose}>
+				No. Cerrar
+			</Button>
+			<Button
+				bg='red.400'
+				onClick={() => handleOnUpdate(usuarioId) && onEditClose}
+				variant='ghost'>
+				Sí. Editar
+			</Button>
+		</ModalFooter>
+	</ModalContent>
+</Modal>; */
 }
