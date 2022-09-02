@@ -93,7 +93,7 @@ function Home() {
 								<Th>Actions</Th>
 							</Thead>
 							<Tbody>
-								{usersInfo.map((e) => (
+								{usersInfo?.map((e) => (
 									<User
 										key={e.usuarioId}
 										usuarioId={e.usuarioId}

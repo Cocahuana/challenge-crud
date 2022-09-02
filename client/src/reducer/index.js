@@ -1,4 +1,4 @@
-import { GET_USERS_FROM_API, GET_USER_BY_ID } from "../actions/actions";
+import { GET_USERS_FROM_API, GET_USER_BY_ID, UPDATE_USER_BY_ID } from "../actions/actions";
 const initialState = {
     usersInfo: [],
     userInfo: [],
@@ -17,6 +17,11 @@ function rootReducer ( state = initialState, action ) {
             return {
                 ...state,
                 userInfo: action.payload,
+            }
+        case UPDATE_USER_BY_ID:
+            return {
+                ...state,
+                usersInfo: action.payload,
             }
         default:
             return state;

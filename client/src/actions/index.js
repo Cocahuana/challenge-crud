@@ -6,6 +6,7 @@ export function getUsersFromApi () {
     return async function ( dispatch ) {
         try
         {
+            console.log( "get inside" );
             let usersInfo = await axios.get( 'http://localhost:3001/users' );
             return dispatch( {
                 type: GET_USERS_FROM_API,
@@ -38,14 +39,11 @@ export function deleteUserById ( id ) {
 }
 
 export function updateUserById ( payload ) {
-    return async function ( dispatch ) {
+    return async function () {
         try
         {
             console.log( "first" )
-            let usersInfo = await axios.put( `http://localhost:3001/users/${ payload.usuarioId }`, payload );
-            return dispatch( {
-                type: UPDATE_USER_BY_ID,
-            } )
+            await axios.put( `http://localhost:3001/users/${ payload.usuarioId }`, payload );
         }
         catch ( error )
         {
