@@ -37,11 +37,12 @@ export function deleteUserById ( id ) {
     }
 }
 
-export function updateUserById ( id ) {
+export function updateUserById ( formData ) {
     return async function ( dispatch ) {
         try
         {
-            let usersInfo = await axios.put( `http://localhost:3001/users/${ id }` );
+            console.log( "first" )
+            let usersInfo = await axios.put( `http://localhost:3001/users/${ formData.dataId }`, formData.data );
             return dispatch( {
                 type: UPDATE_USER_BY_ID,
             } )

@@ -102,11 +102,11 @@ router.post( '/createUser', async ( req, res, next ) => {
 } );
 
 router.put( '/:id', async ( req, res, next ) => {
+	let { user, clave, nombre, email } = req.body;
 	const { id } = req.params;
 	try
 	{
 		let integerId = parseInt( id );
-		let { user, clave, nombre, email } = req.body;
 
 		let findedUser = await User.findOne( {
 			where: {

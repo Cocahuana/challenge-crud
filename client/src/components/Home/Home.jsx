@@ -1,7 +1,7 @@
-import React from 'react';
+import React from "react";
 
-import { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
 	Grid,
 	GridItem,
@@ -22,9 +22,9 @@ import {
 	ModalFooter,
 	ModalBody,
 	ModalCloseButton,
-} from '@chakra-ui/react';
-import { deleteUserById, getUsersFromApi } from '../../actions';
-import User from '../User/User';
+} from "@chakra-ui/react";
+import { deleteUserById, getUsersFromApi } from "../../actions";
+import User from "../User/User";
 
 function Home() {
 	const usersInfo = useSelector((state) => state.usersInfo);
@@ -41,16 +41,16 @@ function Home() {
                 "main"
                 "footer"
             `}
-			gridTemplateRows={'10vh 1fr 5vh'}
-			gridTemplateColumns={'100%'}
+			gridTemplateRows={"10vh 1fr 5vh"}
+			gridTemplateColumns={"100%"}
 			h='100vh'
 			gap='1'
 			color='blackAlpha.700'
 			fontWeight='bold'>
-			<GridItem bg='orange.300' area={'header'}>
+			<GridItem bg='orange.300' area={"header"}>
 				Header
 			</GridItem>
-			<GridItem bg='whiteAlpha.400' area={'main'}>
+			<GridItem bg='whiteAlpha.400' area={"main"}>
 				{usersInfo ? (
 					<TableContainer>
 						<Table variant='striped' colorScheme='orange'>
@@ -85,7 +85,7 @@ function Home() {
 					<h3>Loading...</h3>
 				)}
 			</GridItem>
-			<GridItem bg='blue.300' area={'footer'}>
+			<GridItem bg='blue.300' area={"footer"}>
 				Footer
 			</GridItem>
 		</Grid>
