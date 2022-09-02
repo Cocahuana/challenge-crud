@@ -12,8 +12,27 @@ const { User } = require( "../db" );
 router.get( '/', async ( req, res, next ) => {
 	try
 	{
-		const result = await getUsersFromDb();
-		res.status( 200 ).send( result );
+		const hasUsers = await User.findAll();
+		if ( hasUsers.length === 0 )
+		{
+			await loadInfoFromApiToDb();
+			const allUsers = await User.findAll();
+			if ( allUsers.length > 0 )
+			{
+				const result = await getUsersFromDb();
+				res.status( 200 ).send( result );
+			}
+			else
+			{
+				res.status( 400 ).status( "No se pudieron cargar los usuarios" );
+			}
+
+		}
+		else
+		{
+			const result = await getUsersFromDb();
+			res.status( 200 ).send( result );
+		}
 	}
 	catch ( err ) { res.status( 400 ).json( err.message ); }
 
