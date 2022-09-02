@@ -34,6 +34,31 @@ router.get( '/loadUsers', async ( req, res, next ) => {
 	}
 } );
 
+router.get( '/getUserById/:id', async ( req, res, next ) => {
+	const { id } = req.params;
+	try
+	{
+		let integerId = parseInt( id );
+		const findedUser = await User.findOne( {
+			where: { usuarioId: integerId },
+		} );
+
+		if ( findedUser )
+		{
+			res.status( 200 ).send( findedUser );
+		}
+		else
+		{
+			res.status( 400 ).send( "Usuario no encontrado" );
+		}
+
+	}
+	catch ( err )
+	{
+		res.status( 400 ).json( err.message );
+	}
+} );
+
 router.delete( '/:id', async ( req, res, next ) => {
 	const { id } = req.params;
 	try
